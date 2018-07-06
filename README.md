@@ -2,7 +2,7 @@
 
 Useless tool to transform any physical input into a midi signal output through a
 virtual port. Works on MacOS >= 10.13.x, should work on Linux with JACK, but
-untested. Should gracefully (no) crash on Windows.
+untested. Works on Windows with a few tricks.
 
 ## Current limitations
 
@@ -20,7 +20,9 @@ don't use it right now.
 
 - node >= 8.9.x < 9.x.y
 - python >= 2.7.2 (for node-gyp)
-- MacOS >= 10.13.x (might work under, wouldn't count on it)
+- a C++ compiler, may it be from xcode, vs or custom install (for node-gyp)
+- MacOS >= 10.13.x (might work under, wouldn't count on it) or Windows (tested
+  on 10, should be fine up to 7)
 - (yarn prefered)
 
 ## Usage
@@ -28,6 +30,9 @@ don't use it right now.
 - Take a look at `input.json.sample` to see how to config your inputs. Copy it
   as `input.json`, it will be read as the config.
 - launch app with `yarn start`
+
+On macOS :
+
 - on first launch, you will have to authorize system mods for your terminal :
   System Prefs > Security & Privacy > Privacy tab > Accessibility > tick you
   terminal app in the list. App will exit on first launch, so relaunch it.
@@ -36,6 +41,20 @@ don't use it right now.
   automatically be detected OS wide. Your configured inputs should send the
   messages correctly as long as the app runs, even if your terminal isn't the
   focused app.
+
+On Windows :
+
+- you need a midi loopback for this to work. I recommend using
+  [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) which has an
+  easy UI and allows multiple loopbacks with ease. Create at least one port,
+  it'll be the one you use
+- you have to select your midi output explicitly from the presented list. Use
+  arrow keys to highlight the virtual port and enter to confirm
+- should work fine, you can activate the virtual port on input in your midi
+  software.
+
+I made a [POC](http://www.tobias-erichsen.de/software/loopmidi.html) with a VSTi
+plugged behind on Windows 10.
 
 ## Config
 
@@ -79,8 +98,6 @@ keys.
 - add input action types like `hold` or `drag`
 - add modifiers to ranges and values to modulate what value is sent to midi
 - check that shitshow with ioHook keycodes
-- (if there's a solution for Windows, I'll look into it, right now, this OS can
-  go home, sorry)
 
 ## Contributing
 

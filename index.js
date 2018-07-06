@@ -1,25 +1,55 @@
 const ioHook = require('iohook');
 const midi = require('midi');
+const inquirer = require('inquirer');
 const fs = require('fs');
+const OS = require('os');
 
 const mapping = require('./mapping');
 
 const output = new midi.output();
-output.openVirtualPort('input2midi');
 
-const config = JSON.parse(fs.readFileSync('./input.json', 'utf8'));
+if (OS.platform() === 'win32') {
+  const portCount = output.getPortCount();
+  const ports = [];
+  for (let i = 0; i < portCount; i += 1) {
+    ports.push({
+      value: i,
+      name: output.getPortName(i),
+    });
+  }
+  inquirer
+    .prompt([
+      {
+        name: 'input',
+        type: 'list',
+        message: 'Please choose your midi output device.',
+        choices: ports,
+      },
+    ])
+    .then(({ input }) => {
+      output.openPort(input);
+      main();
+    });
+} else {
+  output.openVirtualPort('input2midi');
+  main();
+}
 
-mapping.load(output, ioHook, config);
+const main = () => {
+  const config = JSON.parse(fs.readFileSync('./input.json', 'utf8'));
 
-ioHook.start();
+  mapping.load(output, ioHook, config);
 
-const exitHandler = (options, err) => {
-  output.closePort();
-  process.exit();
+  ioHook.start();
+
+  const exitHandler = (options, err) => {
+    output.closePort();
+    process.exit();
+  };
+
+  process.on('exit', exitHandler.bind(null, { cleanup: true }));
+  process.on('SIGINT', exitHandler.bind(null, { exit: true }));
+  process.on('SIGUSR1', exitHandler.bind(null, { exit: true }));
+  process.on('SIGUSR2', exitHandler.bind(null, { exit: true }));
+  process.on('uncaughtException', exitHandler.bind(null, { exit: true }));
 };
-
-process.on('exit', exitHandler.bind(null, { cleanup: true }));
-process.on('SIGINT', exitHandler.bind(null, { exit: true }));
-process.on('SIGUSR1', exitHandler.bind(null, { exit: true }));
-process.on('SIGUSR2', exitHandler.bind(null, { exit: true }));
-process.on('uncaughtException', exitHandler.bind(null, { exit: true }));
