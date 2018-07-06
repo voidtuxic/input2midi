@@ -1,0 +1,30 @@
+{
+  "name": "input2midi",
+  "version": "1.0.0",
+  "description": "mouse, keyboard and gamepads as midi outputs on macosx",
+  "main": "index.js",
+  "author": "Calebsem <penguzine@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "iohook": "^0.2.0",
+    "midi": "^0.9.5",
+    "screenres": "^2.0.1"
+  },
+  "iohook": {
+    "targets": [
+      "node-57"
+    ],
+    "platforms": [
+      "win32",
+      "darwin",
+      "linux"
+    ],
+    "arches": [
+      "x64",
+      "ia32"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "mousemove": {
+    "x": {
+      "type": "axis",
+      "note": 9,
+      "range": [0, 127]
+    },
+    "y": {
+      "type": "axis",
+      "note": 10,
+      "range": [0, 127]
+    }
+  },
+  "keydown": {
+    "b": {
+      "type": "press",
+      "note": 14,
+      "value": 96
+    }
+  }
+}
