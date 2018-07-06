@@ -43,7 +43,7 @@ don't use it right now.
 
 You can configure x and y to be axis for now :
 
-```json
+```js
 "mousemove": {
   "x": {
     "type": "axis", // other types will come
@@ -61,7 +61,7 @@ You can configure most keyboard keys to respond to a press. Check
 [`keyConvert.macos.js`](./keyConvert.macos.js) to get a full list of available
 keys.
 
-```json
+```js
 "b": {
   "x": {
     "type": "press", // other types will come
