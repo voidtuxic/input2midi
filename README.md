@@ -61,8 +61,7 @@ plugged behind on Windows 10.
 ### mousemove
 
 You can configure x and y to be axis for now. Check
-[`keyConvert.macos.js`](./keyConvert.macos.js) to get a full list of available
-keys.
+[`keyConvert.js`](./keyConvert.js) to get a full list of available keys.
 
 ```js
 "mousemove": {
@@ -81,8 +80,7 @@ keys.
 ### keydown
 
 You can configure most keyboard keys to respond to a press. Check
-[`keyConvert.macos.js`](./keyConvert.macos.js) to get a full list of available
-keys.
+[`keyConvert.js`](./keyConvert.js) to get a full list of available keys.
 
 ```js
 "b": {
