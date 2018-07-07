@@ -213,6 +213,10 @@ mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
+module-alias@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/module-alias/-/module-alias-2.1.0.tgz#c36d4fd15f7f9d7112f62fa015385e7b65a286c1"
+
 mute-stream@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"

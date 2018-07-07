@@ -9,11 +9,10 @@ untested. Works on Windows with a few tricks.
 As this is very WIP, there are some clear limitations. My advice would be :
 don't use it right now.
 
-- only sends Note ON midi messages with velocity
 - works with node >= 8.9.x < 9.x.y . Might work with above versions but I
   wouldn't bet on it
 - supported events :
-  - `keydown`: press to send note
+  - `press`: press keyboard to send note
   - `mousemove` on `x` and `y` to send note with velocity as axis with a range
 
 ## Requirements
@@ -54,9 +53,52 @@ On Windows :
   software.
 
 I made a [POC](http://www.tobias-erichsen.de/software/loopmidi.html) with a VSTi
-plugged behind on Windows 10.
+plugged behind on Windows 10. And
+[another one](https://twitter.com/tuxication/status/1015564474118475777) with
+GlitchGifVJ from [Azopcorp](https://github.com/AZOPCORP).
 
 ## Config
+
+### Message Types
+
+You can specify in any binding a `messageType` property with the following
+values :
+
+- `noteOn`: the event value will be sent as a note ON midi message
+  ```js
+  // note ON message
+  {
+    "messageType" : "noteOn",
+    "note": 9, // note using the default midi scale
+    // rest of the payload
+  }
+  ```
+- `noteOff`: the event value will be sent as a note OFF midi message
+  ```js
+  // note OFF message
+  {
+    "messageType" : "noteOff",
+    "note": 9, // note using the default midi scale
+    // rest of the payload
+  }
+  ```
+- `raw`: the event value will be sent as a
+  [raw midi message](https://www.midi.org/specifications-old/item/table-1-summary-of-midi-message)'s
+  final argument. The message is defined as an array of integers following
+  [RtMidi's midi output specs](https://www.music.mcgill.ca/~gary/rtmidi/) in the
+  binding's `command` property
+  ```js
+  // raw note OFF message
+  {
+    "messageType" : "raw",
+    "command" : [128, 9],
+    // rest of the payload
+  }
+  ```
+
+If no message type is given, it will default to a note ON message. You can send
+any MIDI message
+[if you know your specs](https://www.midi.org/specifications-old/item/table-1-summary-of-midi-message).
 
 ### mousemove
 
@@ -64,31 +106,30 @@ You can configure x and y to be axis for now. Check
 [`keyConvert.js`](./keyConvert.js) to get a full list of available keys.
 
 ```js
-"mousemove": {
-  "x": {
-    "type": "axis", // other types will come
-    "note": 9, // note using the default midi scale
-    // coordinates are mapped between these values
-    // from left to right for horizontal and top to bottom for vertical
-    "range": [0, 127],
-    // optional : you can specify a key to hold to send message
-    "activator": "ControlLeft"
-  }
+"x": { // same as event property name
+  // payload message type and options
+  "type": "axis",
+  // coordinates are mapped between these values
+  // from left to right for horizontal and top to bottom for vertical
+  "range": [0, 127],
+  // optional : you can specify a key to hold to send message
+  "activator": "ControlLeft"
 }
 ```
 
-### keydown
+### press
 
-You can configure most keyboard keys to respond to a press. Check
+You can configure most keyboard keys to respond to a press. It will send a note
+ON on down and a note OFF on up by default. Check
 [`keyConvert.js`](./keyConvert.js) to get a full list of available keys.
 
 ```js
-"b": {
-  "x": {
-    "type": "press", // other types will come
-    "note": 9, // note using the default midi scale
-    "value": 96 // velocity sent by this press
-  }
+"b": { // lowercase key as property name
+  // payload message type and options
+  "messageType" : type, // overrides down message type
+  "upMessageType" : type,  // overrides up message type
+  "type": "press",
+  "value": 96 // value sent by this press
 }
 ```
 
@@ -96,7 +137,6 @@ You can configure most keyboard keys to respond to a press. Check
 
 - support more ioHook events
 - add xbox controller mappings
-- support more midi message types
 - add input action types like `hold` or `drag`
 - add modifiers to ranges and values to modulate what value is sent to midi
 - check that shitshow with ioHook keycodes

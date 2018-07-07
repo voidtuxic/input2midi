@@ -1,3 +1,4 @@
+require('module-alias/register');
 const ioHook = require('iohook');
 const midi = require('midi');
 const inquirer = require('inquirer');

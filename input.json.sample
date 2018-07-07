@@ -8,11 +8,13 @@
     },
     "y": {
       "type": "axis",
+      "messageType" : "raw",
+      "command" : [128, 9],
       "note": 10,
       "range": [0, 127]
     }
   },
-  "keydown": {
+  "press": {
     "b": {
       "type": "press",
       "note": 14,
