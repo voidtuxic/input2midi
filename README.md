@@ -64,7 +64,7 @@ GlitchGifVJ from [Azopcorp](https://github.com/AZOPCORP).
 You can specify in any binding a `messageType` property with the following
 values :
 
-- `noteOn`: the event value will be sent as a note ON midi message
+- `noteOn`: the event value will be sent as a note ON midi message's velocity
   ```js
   // note ON message
   {
@@ -73,7 +73,7 @@ values :
     // rest of the payload
   }
   ```
-- `noteOff`: the event value will be sent as a note OFF midi message
+- `noteOff`: the event value will be sent as a note OFF midi message's velocity
   ```js
   // note OFF message
   {
