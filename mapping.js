@@ -1,7 +1,7 @@
 const sr = require('screenres');
 
 const math = require('./math');
-const keyConvert = require('./keyConvert.macos');
+const keyConvert = require('./keyConvert');
 
 const screenRaw = sr.get();
 const screen = { x: screenRaw[0], y: screenRaw[1] };
