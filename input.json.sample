@@ -2,6 +2,7 @@
   "mousemove": {
     "x": {
       "type": "axis",
+      "activator": "ControlLeft"
       "note": 9,
       "range": [0, 127]
     },

@@ -11,10 +11,18 @@ let ioHook;
 
 const mapping = {
   mousemove: bindings => {
+    const activators = {};
+    Object.keys(bindings).forEach(key => {
+      const binding = bindings[key];
+      if (binding.activator) {
+        activators[binding.activator] = false;
+      }
+    });
     ioHook.on('mousemove', event => {
       Object.keys(bindings).forEach(key => {
         const binding = bindings[key];
-        if (binding.type === 'axis') {
+        const canAct = binding.activator ? activators[binding.activator] : true;
+        if (canAct && binding.type === 'axis') {
           const value = math.lerp(
             binding.range[0],
             binding.range[1],
@@ -24,6 +32,20 @@ const mapping = {
         }
       });
     });
+    if (Object.keys(activators) > 0) {
+      ioHook.on('keydown', event => {
+        Object.keys(activators).forEach(key => {
+          if (keyConvert[event.keycode] === key) {
+            activators[key] = true;
+          }
+        });
+      });
+      ioHook.on('keyup', event => {
+        Object.keys(activators).forEach(key => {
+          if (keyConvert[event.keycode] === key) activators[key] = false;
+        });
+      });
+    }
   },
   keydown: bindings => {
     ioHook.on('keydown', event => {

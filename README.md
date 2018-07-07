@@ -60,7 +60,9 @@ plugged behind on Windows 10.
 
 ### mousemove
 
-You can configure x and y to be axis for now :
+You can configure x and y to be axis for now. Check
+[`keyConvert.macos.js`](./keyConvert.macos.js) to get a full list of available
+keys.
 
 ```js
 "mousemove": {
@@ -69,7 +71,9 @@ You can configure x and y to be axis for now :
     "note": 9, // note using the default midi scale
     // coordinates are mapped between these values
     // from left to right for horizontal and top to bottom for vertical
-    "range": [0, 127]
+    "range": [0, 127],
+    // optional : you can specify a key to hold to send message
+    "activator": "ControlLeft"
   }
 }
 ```
