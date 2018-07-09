@@ -4,6 +4,7 @@ const send = (payload, output) => {
   switch (payload.messageType) {
     case 'noteOn':
       sendNoteOn(payload, output);
+      break;
     case 'noteOff':
       sendNoteOff(payload, output);
       break;
