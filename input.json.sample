@@ -16,7 +16,13 @@
   },
   "press": {
     "b": {
-      "type": "press",
+      "type": "hold",
+      "note": 14,
+      "value": 96
+    },
+    "c": {
+      "type": "delay",
+      "delay": 500,
       "note": 14,
       "value": 96
     }

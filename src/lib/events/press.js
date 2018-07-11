@@ -28,7 +28,8 @@ const check = (payload, event) => {
 
 const buildValue = (payload, event) => {
   switch (payload.type) {
-    case 'press':
+    case 'hold':
+    case 'delay':
       return applyModifiers(payload.value, payload);
 
     default:
@@ -38,19 +39,43 @@ const buildValue = (payload, event) => {
 
 const init = (payload, output, hook) => {
   analyse(payload);
+  switch (payload.type) {
+    case 'hold':
+      hook.on('keydown', event => {
+        if (check(payload, event)) {
+          const value = buildValue(payload, event);
+          send({ ...payload, value }, output);
+        }
+      });
+      hook.on('keyup', event => {
+        if (check(payload, event)) {
+          const value = buildValue(payload, event);
+          send(
+            { ...payload, value, messageType: payload.upMessageType },
+            output,
+          );
+        }
+      });
+      break;
+    case 'delay':
+      hook.on('keydown', event => {
+        if (check(payload, event)) {
+          const value = buildValue(payload, event);
+          send({ ...payload, value }, output);
+          const delay = setTimeout(() => {
+            send(
+              { ...payload, value, messageType: payload.upMessageType },
+              output,
+            );
+            clearTimeout(delay);
+          }, payload.delay);
+        }
+      });
+      break;
 
-  hook.on('keydown', event => {
-    if (check(payload, event)) {
-      const value = buildValue(payload, event);
-      send({ ...payload, value }, output);
-    }
-  });
-  hook.on('keyup', event => {
-    if (check(payload, event)) {
-      const value = buildValue(payload, event);
-      send({ ...payload, value, messageType: payload.upMessageType }, output);
-    }
-  });
+    default:
+      break;
+  }
 };
 
 module.exports = init;

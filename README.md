@@ -128,8 +128,31 @@ ON on down and a note OFF on up by default. Check
   // payload message type and options
   "messageType" : type, // overrides down message type
   "upMessageType" : type,  // overrides up message type
-  "type": "press",
+  "type": "hold",
   "value": 96 // value sent by this press
+  // type arguments...
+}
+```
+
+#### `type: hold`
+
+A first midi message is sent on key down and a second one on key up. Useful for
+mapping buttons to hold notes or manually impacting parameters.
+
+This type does not require any other payload arguments to work.
+
+#### `type: delay`
+
+A first midi message is sent on key down and a second one after a specific
+delay. Multiple delays can be sent simultaneously, but expect them to conflict
+if you repeatedly press the same key. You can setup a button to input as a delay
+in the payload :
+
+```js
+"b": {
+  // payload...
+  "type": "delay",
+  "delay": 250 // delay in ms
 }
 ```
 
