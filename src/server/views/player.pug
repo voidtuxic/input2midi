@@ -1,0 +1,33 @@
+div
+  h3= 'Playlist'
+  table
+    p
+      span
+        a(href='#' onclick="playCurrent()")
+          i(class='far fa-play-circle')
+      span= '  '
+      span
+        a(href='#' onclick="stopCurrent()")
+          i(class='far fa-stop-circle')
+    p
+      span(id='currentTrack', width='100%')
+        i= 'no track playing'
+    p
+      span(id='currentTrackTime', width='100%')
+        i= '--:--'
+      span= '  /  '
+      span(id='currentTrackDuration', width='100%')
+        i= '--:--'
+  table
+    thead
+      tr
+        th= 'Track name'
+        th= 'Controls'
+    tbody
+      each track in playlist
+        tr
+          td= track.name
+          td
+            a(href='#' onclick="playFile('" + track.file + "')") Play
+script
+  include js/player.js

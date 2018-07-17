@@ -1,0 +1,5 @@
+[
+  { "name": "test track 1", "file": "1.wav" },
+  { "name": "test track 2", "file": "2.wav" },
+  { "name": "test track 3", "file": "3.wav" }
+]

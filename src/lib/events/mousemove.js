@@ -23,7 +23,12 @@ const analyse = payload => {
   }
 };
 
+// limit mousemove events
+let lastMessage;
+const interval = 50;
+
 const check = payload => {
+  if (lastMessage && Date.now() - lastMessage < interval) return false;
   if (activatorOptions.enabled && activators[payload.activator] !== undefined) {
     return activators[payload.activator];
   }
@@ -52,6 +57,7 @@ const init = (payload, output, hook) => {
 
   hook.on('mousemove', event => {
     if (check(payload, event)) {
+      lastMessage = Date.now();
       const value = buildValue(payload, event);
       send({ ...payload, value }, output);
     }

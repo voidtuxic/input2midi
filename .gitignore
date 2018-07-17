@@ -1,4 +1,7 @@
 node_modules/
 .vscode/settings.json
 input.json
+playlist.json
 iohook*.log
+audio/
+.DS_Store

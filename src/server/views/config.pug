@@ -1,21 +1,21 @@
 div
   h3= 'Mouse move'
   each binding in config.mousemove
-    div(class='card small')
+    div(class='card fluid')
       each prop in binding
         div(class='section')
           div(class='row')
             div(class='col-sm col-md col-lg')
-              p= prop.field
+              span= prop.field
             div(class='col-sm col-md col-lg')
-              p= prop.value
+              span= prop.value
   h3= 'Key press'
   each binding in config.press
-    div(class='card small')
+    div(class='card fluid')
       each prop in binding
         div(class='section')
           div(class='row')
             div(class='col-sm col-md col-lg')
-              p= prop.field
+              span= prop.field
             div(class='col-sm col-md col-lg')
-              p= prop.value
+              span= prop.value

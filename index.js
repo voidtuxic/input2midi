@@ -17,7 +17,8 @@ const main = () => {
   ioHook.start();
 
   // server setup
-  server.create(config);
+  const playlist = JSON.parse(fs.readFileSync('./playlist.json', 'utf8'));
+  server.create(config, playlist);
 
   // crash and exit handling
   const exitHandler = (options, err) => {
