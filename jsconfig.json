@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@server/*": ["src/server/*"],
+      "@lib/*": ["src/lib/*"],
+      "@events/*": ["src/lib/events/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}

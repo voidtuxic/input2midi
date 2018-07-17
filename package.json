@@ -10,15 +10,19 @@
     "debug": "node --inspect-brk=9229 index.js"
   },
   "dependencies": {
+    "clear": "^0.1.0",
+    "express": "^4.16.3",
     "inquirer": "^6.0.0",
     "iohook": "^0.2.0",
     "midi": "^0.9.5",
     "module-alias": "^2.1.0",
+    "pug": "^2.0.3",
     "screenres": "^2.0.1"
   },
   "_moduleAliases": {
     "@root": ".",
-    "@app": "src",
+    "@src": "src",
+    "@server": "src/server",
     "@lib": "src/lib",
     "@events": "src/lib/events"
   },

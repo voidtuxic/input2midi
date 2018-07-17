@@ -6,16 +6,20 @@ const fs = require('fs');
 const OS = require('os');
 
 const mapping = require('./mapping');
+const server = require('@server/app');
 
 const output = new midi.output();
 
 const main = () => {
+  // midi setup
   const config = JSON.parse(fs.readFileSync('./input.json', 'utf8'));
-
   mapping.load(output, ioHook, config);
-
   ioHook.start();
 
+  // server setup
+  server.create(config);
+
+  // crash and exit handling
   const exitHandler = (options, err) => {
     output.closePort();
     process.exit();
@@ -26,6 +30,7 @@ const main = () => {
   process.on('SIGUSR1', exitHandler.bind(null, { exit: true }));
   process.on('SIGUSR2', exitHandler.bind(null, { exit: true }));
   process.on('uncaughtException', exitHandler.bind(null, { exit: true }));
+  process.on('unhandledRejection', exitHandler.bind(null, { exit: true }));
 };
 
 if (OS.platform() === 'win32') {
